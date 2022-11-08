@@ -9,7 +9,7 @@ app.use(cors());
 
 //? Server
 let portNum = process.env.PORT || 5000;
-let mongoAtlastUrl = process.env.DBURL;
+let mongoAtlastUrl = process.env.DBURL || 'mongodb+srv://CanvasMan:CanvasMan1234@cluster0.fivp4.mongodb.net/TheUnityProjectMural?retryWrites=true&w=majority';
 
 app.listen(portNum, () => {
     console.log(`Server is running on port ${portNum}`);
@@ -60,15 +60,19 @@ app.get("/tupm/addVisitorsCount/", async (req, res) => {
     let exists = await visitorsCountModel.find({ip: ip});
     if(exists.length > 0){
         await visitorsCountModel.updateOne({ip: ip}, {$inc: {count: 1}});
-        res.send("Visitor Count Incremented!");
     } else {
         let data = {
             "ip": ip,
             "count": 1
         }
         await visitorsCountModel.create(data);        
-        res.send("New Visitor Count Added");
     }
+    let count = 0;
+    let result = await visitorsCountModel.find({});
+    for(let i of result){
+        count += i["count"]
+    }
+    res.send({"visitorsCount": count});
 });
 
 // Add each art count
@@ -103,6 +107,7 @@ app.get("/tupm/eachArtCount/:artist/:viewOrDownload", async (req, res) => {
     4 = Ultra High Res
 */
 app.get("/tupm/allResolutionDownloadCount/:resolution", async (req, res) => {
+    console.log("ajdbaiudigadigu")
     let type = req.params.resolution;
     let exists = await allResolutionDownloadCountModel.find({type: type});
     if(exists.length > 0){

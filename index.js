@@ -7,16 +7,16 @@ let cors = require('cors');
 //? Middleware
 app.use(
     cors({
-        origin: "*",
-        // credentials: true,
+        origin: true,
+        credentials: false,
     })
 );
 // app.use(cors());
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+// });
 
 //? Server
 let portNum = process.env.PORT || 5000;

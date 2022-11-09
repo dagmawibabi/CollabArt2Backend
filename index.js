@@ -5,12 +5,13 @@ let cors = require('cors');
 // let axios = require('axios');
 
 //? Middleware
-app.use(
-    cors({
-        origin: "*",
-        credentials: true,
-    })
-);
+// app.use(
+    // cors({
+    //     origin: "*",
+    //     credentials: true,
+    // })
+// );
+app.use(cors());
 
 //? Server
 let portNum = process.env.PORT || 5000;
@@ -46,8 +47,8 @@ let allResolutionDownloadCountModel = new mongoose.model('allResolutionDownloadC
 async function connectToDB() {
     console.log("Connecting...");
     await mongoose.connect(mongoAtlastUrl, {
-        // useNewUrlParser: true,
-        // useUnifiedTopology: true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     }).then(console.log("MDBA Connected!") ).catch(err => console.log("ERROR"));
     console.log("connected!");
 }      

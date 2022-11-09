@@ -7,8 +7,8 @@ let cors = require('cors');
 //? Middleware
 app.use(
     cors({
-        origin: true,
-        credentials: false,
+        origin: "*",
+        credentials: true,
     })
 );
 // app.use(cors());
@@ -84,7 +84,7 @@ app.get("/tupm/addVisitorsCount/", async (req, res) => {
         count += i["count"]
     }
     let response = {"visitorsCount": count};
-    res.send(JSON.stringify(response));
+    res.status(200).send(JSON.stringify(response));
 });
 
 // Add each art count
@@ -95,10 +95,10 @@ app.get("/tupm/eachArtCount/:artist/:viewOrDownload", async (req, res) => {
     if(exists.length > 0){
         if(viewOrDownload == 1){
             await eachArtCountModel.updateOne({artist: artist}, {$inc: {viewCount: 1}});
-            res.send("View Count Incremented!");
+            res.status(200).send("View Count Incremented!");
         } else {
             await eachArtCountModel.updateOne({artist: artist}, {$inc: {downloadCount: 1}});
-            res.send("Download Count Incremented!");
+            res.status(200).send("Download Count Incremented!");
         }
     } else {
         let data = {
@@ -107,7 +107,7 @@ app.get("/tupm/eachArtCount/:artist/:viewOrDownload", async (req, res) => {
             "downloadCount": 1
         }
         await eachArtCountModel.create(data);        
-        res.send("New View and Download Count Added");
+        res.status(200).send("New View and Download Count Added");
     }
 })
 
@@ -123,14 +123,14 @@ app.get("/tupm/allResolutionDownloadCount/:resolution", async (req, res) => {
     let exists = await allResolutionDownloadCountModel.find({type: type});
     if(exists.length > 0){
         await allResolutionDownloadCountModel.updateOne({type: type}, {$inc: {count: 1}});
-        res.send("All Resolution Count Incremented!");
+        res.status(200).send("All Resolution Count Incremented!");
     } else {
         let data = {
             "type": type,
             "count": 1
         }
         await allResolutionDownloadCountModel.create(data);        
-        res.send("New Resolution Count Added");
+        res.status(200).send("New Resolution Count Added");
     }
 })
 

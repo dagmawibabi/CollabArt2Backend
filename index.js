@@ -46,8 +46,8 @@ let allResolutionDownloadCountModel = new mongoose.model('allResolutionDownloadC
 async function connectToDB() {
     console.log("Connecting...");
     await mongoose.connect(mongoAtlastUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true
     }).then(console.log("MDBA Connected!") ).catch(err => console.log("ERROR"));
     console.log("connected!");
 }      
@@ -113,7 +113,6 @@ app.get("/tupm/eachArtCount/:artist/:viewOrDownload", async (req, res) => {
     4 = Ultra High Res
 */
 app.get("/tupm/allResolutionDownloadCount/:resolution", async (req, res) => {
-    console.log("ajdbaiudigadigu")
     let type = req.params.resolution;
     let exists = await allResolutionDownloadCountModel.find({type: type});
     if(exists.length > 0){

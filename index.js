@@ -5,7 +5,12 @@ let cors = require('cors');
 // let axios = require('axios');
 
 //? Middleware
-app.use(cors());
+app.use(
+    cors({
+        origin: "*",
+        credentials: true,
+    })
+);
 
 //? Server
 let portNum = process.env.PORT || 5000;

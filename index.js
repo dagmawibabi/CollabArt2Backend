@@ -2,13 +2,14 @@ let mongoose = require('mongoose');
 let express = require('express');
 let app = new express();
 let cors = require('cors');
+const { json } = require('express');
 // let axios = require('axios');
 
 //? Middleware
 app.use(
     cors({
         origin: "*",
-        credentials: true,
+        credentials: false,
     })
 );
 // app.use(cors());
@@ -84,7 +85,8 @@ app.get("/tupm/addVisitorsCount/", async (req, res) => {
         count += i["count"]
     }
     let response = {"visitorsCount": count};
-    res.status(200).send(response);
+    // console.log(response);
+    res.send(response);
 });
 
 // Add each art count

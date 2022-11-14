@@ -84,7 +84,7 @@ app.get("/tupm/addVisitorsCount/", async (req, res) => {
         count += i["count"]
     }
     let response = {"visitorsCount": count};
-    res.status(200).send(JSON.stringify(response));
+    res.status(200).send(response);
 });
 
 // Add each art count
